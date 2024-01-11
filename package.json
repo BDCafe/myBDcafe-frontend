@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@gluestack-style/react": "^1.0.36",
+    "@gluestack-ui/config": "^1.0.11",
     "@gluestack-ui/themed": "^1.0.35",
     "react": "18.2.0",
     "react-native": "0.73.2",
-    "react-native-svg": "^13.4.0"
+    "react-native-paper": "^5.12.0",
+    "react-native-svg": "^13.4.0",
+    "react-native-vector-icons": "^10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
