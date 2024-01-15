@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     width: '100%',
     paddingHorizontal: 2,
+    marginBottom: 2,
   },
 });
