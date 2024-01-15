@@ -2,17 +2,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useSharedValue,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Text } from 'react-native-paper';
+import WeeklyCalendarWeek from '../../components/WeeklyCalendarWeek';
 
 const INITIAL_PANEL_HEIGHT = 20; // Initial height of the panel (collapsed state)
 const MID_PANEL_HEIGHT = 150; // Intermediate height of the panel
@@ -64,6 +59,8 @@ const Panel: React.FC = () => {
     <View style={styles.container}>
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.panel, animatedStyle]}>
+          <Text style={styles.weekTitle}>2024년 2월 1주</Text>
+          <WeeklyCalendarWeek></WeeklyCalendarWeek>
           <View style={styles.hadle}></View>
         </Animated.View>
       </GestureDetector>
@@ -80,17 +77,25 @@ const styles = StyleSheet.create({
   panel: {
     width: '100%',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#D2D4DA',
+    backgroundColor: '#F3F4F8',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    paddingTop: 4,
     paddingBottom: 8,
   },
   hadle: {
     width: 32,
     height: 4,
     backgroundColor: '#9496A1',
+    marginTop: 8,
+  },
+  weekTitle: {
+    fontFamily: 'nanum_square_neo_deb',
+    fontSize: 16,
+    color: '#5B5D6B',
+    marginBottom: 8,
   },
 });
 
