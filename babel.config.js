@@ -15,6 +15,7 @@ module.exports = {
           '.jsx',
           '.js',
           '.json',
+          '.svg',
         ],
         alias: {
           '@': './src',
@@ -24,5 +25,6 @@ module.exports = {
         },
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 };
