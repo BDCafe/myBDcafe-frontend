@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -10,13 +10,17 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 import WeeklyCalendarWeek from '../../components/WeeklyCalendarWeek';
 
-const INITIAL_PANEL_HEIGHT = 0; // Initial height of the panel (collapsed state)
+const INITIAL_PANEL_HEIGHT = 20; // Initial height of the panel (collapsed state)
 const MID_PANEL_HEIGHT = 150; // Intermediate height of the panel
 const MAX_PANEL_HEIGHT = 300; // Maximum height of the panel (fully expanded state)
 
-const Panel: React.FC = () => {
+interface Props {
+  style: ViewStyle;
+}
+
+const Panel: React.FC<Props> = ({ style }) => {
   const panelHeight = useSharedValue(MID_PANEL_HEIGHT);
-  const startHeight = useSharedValue(0);
+  const startHeight = useSharedValue(INITIAL_PANEL_HEIGHT);
 
   const panGesture = Gesture.Pan()
     .onStart(e => {
@@ -46,18 +50,18 @@ const Panel: React.FC = () => {
       ) {
         panelHeight.value = withSpring(MAX_PANEL_HEIGHT);
       } else {
-        panelHeight.value = withSpring(0);
+        panelHeight.value = withSpring(INITIAL_PANEL_HEIGHT);
       }
     });
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: panelHeight.value,
+      height: withClamp({ min: 20 }, withSpring(panelHeight.value)),
     };
   });
 
   return (
-    <View style={styles.container}>
+    <View style={style}>
       <Animated.View style={[styles.panel, animatedStyle]}>
         <View style={styles.weeklyContainer}>
           <Text style={styles.weekTitle}>2024년 2월 1주</Text>
@@ -81,7 +85,7 @@ const PanelHandle = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
