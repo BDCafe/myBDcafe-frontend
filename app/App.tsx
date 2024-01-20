@@ -6,6 +6,8 @@ import WeeklyCalendar from './src/screens/main/WeeklyCalendar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Map from './src/screens/main/Map';
 import { useState } from 'react';
+import MainScreen from './src/screens/main/MainScreen';
+import MBCBottomNavigation from './src/components/BottomNavigation';
 
 const styles = StyleSheet.create({});
 
@@ -13,16 +15,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <MainAppbar />
-      <MainFilter />
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <WeeklyCalendar
-          style={{
-            position: 'absolute',
-            zIndex: 1,
-          }}
-        />
-        <Map style={{ flex: 1 }} />
-      </GestureHandlerRootView>
+      <MBCBottomNavigation />
     </SafeAreaProvider>
   );
 };
