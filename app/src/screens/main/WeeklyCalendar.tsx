@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -21,6 +21,12 @@ interface Props {
 const Panel: React.FC<Props> = ({ style }) => {
   const panelHeight = useSharedValue(MID_PANEL_HEIGHT);
   const startHeight = useSharedValue(INITIAL_PANEL_HEIGHT);
+
+  const date = new Date();
+  console.log(`panel ${date}`);
+
+  const formattedDate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${getWeek(date)}주`;
+  const [weekDay, setWeekDay] = useState(formattedDate);
 
   const panGesture = Gesture.Pan()
     .onStart(e => {
@@ -64,8 +70,8 @@ const Panel: React.FC<Props> = ({ style }) => {
     <View style={style}>
       <Animated.View style={[styles.panel, animatedStyle]}>
         <View style={styles.weeklyContainer}>
-          <Text style={styles.weekTitle}>2024년 2월 1주</Text>
-          <WeeklyCalendarWeek></WeeklyCalendarWeek>
+          <Text style={styles.weekTitle}>{weekDay}</Text>
+          <WeeklyCalendarWeek date={date} />
         </View>
         <GestureDetector gesture={panGesture}>
           <PanelHandle />
@@ -73,6 +79,14 @@ const Panel: React.FC<Props> = ({ style }) => {
       </Animated.View>
     </View>
   );
+};
+
+const getWeek = (date: Date) => {
+  const newDate = new Date(date);
+  const currentDate = date.getDate();
+  const firstDay = new Date(newDate.setDate(1)).getDay();
+
+  return Math.ceil((currentDate + firstDay) / 7);
 };
 
 const PanelHandle = () => {

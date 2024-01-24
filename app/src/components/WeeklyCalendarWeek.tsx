@@ -2,37 +2,41 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import WeeklyCalendarDay from './WeeklyCalendarDay';
 
-const WeeklyCalendarWeek = () => {
+interface Props {
+  date: Date;
+}
+
+const WeeklyCalendarWeek: React.FC<Props> = ({ date }) => {
+  // 월요일 구하는 함수
+  const getStartOfWeek = (date: Date) => {
+    const startOfWeek = new Date(date);
+    const dayOfWeek = startOfWeek.getDay();
+    const difference = dayOfWeek >= 1 ? dayOfWeek - 1 : 6; // 월요일과의 차이
+    startOfWeek.setDate(startOfWeek.getDate() - difference);
+    return startOfWeek;
+  };
+
+  // 현재 주의 월요일
+  const startOfWeek = getStartOfWeek(date);
+
+  // 일주일 날짜 배열
+  const weekDays = Array.from({ length: 7 }, (_, index) => {
+    const day = new Date(startOfWeek);
+    day.setDate(day.getDate() + index);
+    return day;
+  });
+
   return (
     <View style={styles.container}>
-      <WeeklyCalendarDay
-        dayTitle={'MON'}
-        dayNum={29}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'TUE'}
-        dayNum={30}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'WEN'}
-        dayNum={1}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'THU'}
-        dayNum={2}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'FRI'}
-        dayNum={3}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'SAT'}
-        dayNum={4}
-      ></WeeklyCalendarDay>
-      <WeeklyCalendarDay
-        dayTitle={'SUN'}
-        dayNum={0o5}
-      ></WeeklyCalendarDay>
+      {weekDays.map((day, index) => (
+        <WeeklyCalendarDay
+          key={index}
+          dayTitle={day
+            .toLocaleString('en-US', { weekday: 'short' })
+            .toUpperCase()}
+          dayNum={day.getDate()}
+        ></WeeklyCalendarDay>
+      ))}
     </View>
   );
 };
