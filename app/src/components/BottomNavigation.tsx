@@ -66,9 +66,16 @@ const MBCBottomNavigation = () => {
       //       />
       //     );
       //   }}
-      renderLabel={({ route }) => {
+      renderLabel={({ route, focused }) => {
         return (
-          <Text style={{ fontSize: 10, textAlign: 'center' }}>
+          <Text
+            style={{
+              fontFamily: 'nanum_square_neo_deb',
+              fontSize: 10,
+              textAlign: 'center',
+              color: focused ? '#FD3636' : '#D2D4DA',
+            }}
+          >
             {route.title}
           </Text>
         );
