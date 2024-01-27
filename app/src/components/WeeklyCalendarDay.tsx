@@ -1,14 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 interface Props {
   dayTitle: String;
   dayNum: Number;
+  onLayout: (event: LayoutChangeEvent) => void;
 }
 
-const WeeklyCalendarDay = ({ dayTitle, dayNum }: Props) => {
+const WeeklyCalendarDay = ({ dayTitle, dayNum, onLayout }: Props) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={onLayout}
+    >
       <Text style={styles.dayTitle}>{dayTitle}</Text>
       <View style={styles.dayContainer}>
         <Text style={styles.dayNum}>

@@ -16,6 +16,10 @@ const MainAppbar = () => {
         title="내생카"
         titleStyle={styles.titleStyle}
       />
+      <Appbar.Action
+        icon="cog-outline"
+        onPress={() => {}}
+      />
     </Appbar.Header>
   );
 };

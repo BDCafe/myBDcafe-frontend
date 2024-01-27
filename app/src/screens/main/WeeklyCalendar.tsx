@@ -1,20 +1,40 @@
 import { StyleSheet, Text, View, ViewStyle } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import WeeklyCalendarPanel from '../../components/WeeklyCalendarPanel';
 import WeeklyCalendarSchedule from '../../components/WeeklyCalendarSchedule';
 import { EventJson, testJson } from '../../model/Event';
 
 interface Props {
   style: ViewStyle;
+  schedule: EventJson;
 }
 
-const WeeklyCalendar: React.FC<Props> = ({ style, schedule = testJson }) => {
+const WeeklyCalendar: React.FC<Props> = ({ style, schedule }) => {
+  const [dayWidth, setDayWidth] = useState<number | null>(null);
+  const handleDayWidthSet = (width: number) => {
+    setDayWidth(width);
+    console.log(`calendar call: ${width}`);
+  };
+
   return (
     <View style={style}>
       <View style={styles.scheduleContainer}>
-        {/* <WeeklyCalendarSchedule /> */}
+        {dayWidth !== null && (
+          <WeeklyCalendarSchedule
+            scheduleTitle={
+              schedule?.content[0].eventName || testJson.content[0].eventName
+            }
+            startDate={
+              schedule?.content[0].startDate!! || testJson.content[0].startDate
+            }
+            endDate={
+              schedule?.content[0].endDate!! || testJson.content[0].endDate
+            }
+            dayContainerWidth={dayWidth}
+          />
+        )}
       </View>
-      <WeeklyCalendarPanel />
+      <WeeklyCalendarPanel onDayWidthSet={handleDayWidthSet} />
     </View>
   );
 };
@@ -28,8 +48,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
     top: 60,
     bottom: 20,
-    left: 2,
-    right: 2,
+    left: 4,
+    right: 4,
     backgroundColor: 'rgba(0, 125, 255, 0.5)',
   },
 });

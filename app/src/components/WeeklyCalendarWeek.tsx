@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import WeeklyCalendarDay from './WeeklyCalendarDay';
 
 interface Props {
   date: Date;
+  onDayWidthSet: (width: number) => void;
 }
 
-const WeeklyCalendarWeek: React.FC<Props> = ({ date }) => {
+const WeeklyCalendarWeek: React.FC<Props> = ({ date, onDayWidthSet }) => {
   // 월요일 구하는 함수
   const getStartOfWeek = (date: Date) => {
     const startOfWeek = new Date(date);
@@ -26,6 +27,12 @@ const WeeklyCalendarWeek: React.FC<Props> = ({ date }) => {
     return day;
   });
 
+  //부모 컴포넌트로 너비 전달용
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    onDayWidthSet(width);
+  };
+
   return (
     <View style={styles.container}>
       {weekDays.map((day, index) => (
@@ -35,6 +42,7 @@ const WeeklyCalendarWeek: React.FC<Props> = ({ date }) => {
             .toLocaleString('en-US', { weekday: 'short' })
             .toUpperCase()}
           dayNum={day.getDate()}
+          onLayout={handleLayout}
         ></WeeklyCalendarDay>
       ))}
     </View>
