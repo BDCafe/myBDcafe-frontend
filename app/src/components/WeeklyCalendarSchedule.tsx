@@ -16,7 +16,8 @@ const WeeklyCalendarSchedule: React.FC<Props> = ({
   backgroundColor,
   dayContainerWidth,
 }) => {
-  console.log(`start: ${startDate.getDay()}, end: ${endDate.getDay()}`);
+  //console.log(`dayContainerWidth: ${dayContainerWidth}`);
+  //console.log(`start: ${startDate.getDay()}, end: ${endDate.getDay()}`);
 
   const PADDING_BETWEEN_DAY = 4;
 
@@ -33,7 +34,7 @@ const WeeklyCalendarSchedule: React.FC<Props> = ({
     right = (7 - endDate.getDay()) * (dayContainerWidth + PADDING_BETWEEN_DAY);
   }
 
-  console.log(`left: ${left}, right: ${right}`);
+  //console.log(`left: ${left}, right: ${right}`);
 
   return (
     <View
@@ -47,7 +48,6 @@ const WeeklyCalendarSchedule: React.FC<Props> = ({
         left: left,
         right: right,
         top: 0,
-        paddingHorizontal: 2,
       }}
     >
       <Text style={styles.title}>{scheduleTitle}</Text>
@@ -62,5 +62,6 @@ const styles = StyleSheet.create({
     fontFamily: 'nanum_square_neo_cbd',
     fontSize: 8,
     justifyContent: 'center',
+    marginHorizontal: 4,
   },
 });

@@ -14,11 +14,7 @@ const INITIAL_PANEL_HEIGHT = 20; // Initial height of the panel (collapsed state
 const MID_PANEL_HEIGHT = 150; // Intermediate height of the panel
 const MAX_PANEL_HEIGHT = 300; // Maximum height of the panel (fully expanded state)
 
-interface Props {
-  onDayWidthSet: (width: number) => void;
-}
-
-const WeeklyCalendarPanel: React.FC<Props> = ({ onDayWidthSet }) => {
+const WeeklyCalendarPanel = () => {
   const panelHeight = useSharedValue(MID_PANEL_HEIGHT);
   const startHeight = useSharedValue(INITIAL_PANEL_HEIGHT);
 
@@ -69,10 +65,7 @@ const WeeklyCalendarPanel: React.FC<Props> = ({ onDayWidthSet }) => {
     <Animated.View style={[styles.panel, animatedStyle]}>
       <View style={styles.weeklyContainer}>
         <Text style={styles.weekTitle}>{weekDay}</Text>
-        <WeeklyCalendarWeek
-          date={date}
-          onDayWidthSet={onDayWidthSet}
-        />
+        <WeeklyCalendarWeek date={date} />
       </View>
       <GestureDetector gesture={panGesture}>
         <PanelHandle />

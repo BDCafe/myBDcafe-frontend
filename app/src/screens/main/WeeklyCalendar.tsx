@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import {
+  LayoutChangeEvent,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import WeeklyCalendarPanel from '../../components/WeeklyCalendarPanel';
 import WeeklyCalendarSchedule from '../../components/WeeklyCalendarSchedule';
@@ -10,31 +16,30 @@ interface Props {
 }
 
 const WeeklyCalendar: React.FC<Props> = ({ style, schedule }) => {
-  const [dayWidth, setDayWidth] = useState<number | null>(null);
-  const handleDayWidthSet = (width: number) => {
-    setDayWidth(width);
-    console.log(`calendar call: ${width}`);
+  console.log(schedule);
+
+  const [dayContainerWidth, setDayContainerWidth] = useState<number>(0);
+
+  const onLayout = (event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    const containerWidth = (width - 24) / 7;
+    setDayContainerWidth(containerWidth);
   };
 
   return (
     <View style={style}>
-      <View style={styles.scheduleContainer}>
-        {dayWidth !== null && (
-          <WeeklyCalendarSchedule
-            scheduleTitle={
-              schedule?.content[0].eventName || testJson.content[0].eventName
-            }
-            startDate={
-              schedule?.content[0].startDate!! || testJson.content[0].startDate
-            }
-            endDate={
-              schedule?.content[0].endDate!! || testJson.content[0].endDate
-            }
-            dayContainerWidth={dayWidth}
-          />
-        )}
+      <View
+        style={styles.scheduleContainer}
+        onLayout={onLayout}
+      >
+        <WeeklyCalendarSchedule
+          scheduleTitle={schedule?.content[0].eventName || 'error'}
+          startDate={schedule?.content[0].startDate!! || 'error'}
+          endDate={schedule?.content[0].endDate!! || 'error'}
+          dayContainerWidth={dayContainerWidth}
+        />
       </View>
-      <WeeklyCalendarPanel onDayWidthSet={handleDayWidthSet} />
+      <WeeklyCalendarPanel />
     </View>
   );
 };

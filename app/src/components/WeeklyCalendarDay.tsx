@@ -4,15 +4,11 @@ import React from 'react';
 interface Props {
   dayTitle: String;
   dayNum: Number;
-  onLayout: (event: LayoutChangeEvent) => void;
 }
 
-const WeeklyCalendarDay = ({ dayTitle, dayNum, onLayout }: Props) => {
+const WeeklyCalendarDay = ({ dayTitle, dayNum }: Props) => {
   return (
-    <View
-      style={styles.container}
-      onLayout={onLayout}
-    >
+    <View style={styles.container}>
       <Text style={styles.dayTitle}>{dayTitle}</Text>
       <View style={styles.dayContainer}>
         <Text style={styles.dayNum}>

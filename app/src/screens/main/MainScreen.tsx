@@ -5,8 +5,12 @@ import MainFilter from './MainFilter';
 import WeeklyCalendar from './WeeklyCalendar';
 import Map from './Map';
 import MBCFab from './Fab';
+import { testJson } from '../../model/Event';
 
 const MainScreen = () => {
+  const testData = testJson;
+  //console.log(testData);
+
   return (
     <>
       <MainFilter />
@@ -16,6 +20,7 @@ const MainScreen = () => {
             position: 'absolute',
             zIndex: 1,
           }}
+          schedule={testData}
         />
         <Map style={{ flex: 1 }} />
       </GestureHandlerRootView>
