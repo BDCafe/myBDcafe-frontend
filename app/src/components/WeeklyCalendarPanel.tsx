@@ -77,7 +77,15 @@ const WeeklyCalendarPanel = () => {
 const getWeek = (date: Date) => {
   const newDate = new Date(date);
   const currentDate = date.getDate();
-  const firstDay = new Date(newDate.setDate(1)).getDay();
+  const firstDayOfMonth = new Date(
+    newDate.getFullYear(),
+    newDate.getMonth(),
+    1,
+  );
+  let firstDay = firstDayOfMonth.getDay();
+
+  //월요일 시작
+  firstDay = firstDay === 0 ? -1 : firstDay - 1;
 
   return Math.ceil((currentDate + firstDay) / 7);
 };

@@ -4,10 +4,9 @@ import WeeklyCalendarDay from './WeeklyCalendarDay';
 
 interface Props {
   date: Date;
-  onDayWidthSet: (width: number) => void;
 }
 
-const WeeklyCalendarWeek: React.FC<Props> = ({ date, onDayWidthSet }) => {
+const WeeklyCalendarWeek: React.FC<Props> = ({ date }) => {
   // 월요일 구하는 함수
   const getStartOfWeek = (date: Date) => {
     const startOfWeek = new Date(date);
@@ -27,12 +26,6 @@ const WeeklyCalendarWeek: React.FC<Props> = ({ date, onDayWidthSet }) => {
     return day;
   });
 
-  //부모 컴포넌트로 너비 전달용
-  const handleLayout = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    onDayWidthSet(width);
-  };
-
   return (
     <View style={styles.container}>
       {weekDays.map((day, index) => (
@@ -42,7 +35,6 @@ const WeeklyCalendarWeek: React.FC<Props> = ({ date, onDayWidthSet }) => {
             .toLocaleString('en-US', { weekday: 'short' })
             .toUpperCase()}
           dayNum={day.getDate()}
-          onLayout={handleLayout}
         ></WeeklyCalendarDay>
       ))}
     </View>
