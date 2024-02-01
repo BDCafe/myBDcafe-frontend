@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import WeeklyCalendarPanel from '../../components/WeeklyCalendarPanel';
 import WeeklyCalendarSchedule from '../../components/WeeklyCalendarSchedule';
-import { EventJson, testJson } from '../../model/Event';
+import { EventJson } from '../../model/Event';
 
 interface Props {
   style: ViewStyle;
@@ -16,8 +16,9 @@ interface Props {
 }
 
 const WeeklyCalendar: React.FC<Props> = ({ style, schedule }) => {
-  console.log(schedule);
+  //console.log(schedule);
 
+  //dayContainer 가로 길이 설정용
   const [dayContainerWidth, setDayContainerWidth] = useState<number>(0);
 
   const onLayout = (event: LayoutChangeEvent) => {
@@ -26,12 +27,40 @@ const WeeklyCalendar: React.FC<Props> = ({ style, schedule }) => {
     setDayContainerWidth(containerWidth);
   };
 
+  //패널 최대 확장 상태
+  const [isPanelExtended, setIsPanelExtended] = useState<Boolean>(false);
+
+  const scheduleList = () => {
+    const { content } = schedule;
+
+    if (!content) {
+      return <Text>error</Text>;
+    }
+
+    // Determine the number of items to render
+    const numberOfItems = isPanelExtended
+      ? content.length
+      : Math.min(content.length, 4);
+
+    // Render the items
+    return content.slice(0, numberOfItems).map((item, index) => (
+      <WeeklyCalendarSchedule
+        key={index} // Use a unique key for each item
+        scheduleTitle={item.eventName}
+        startDate={item.startDate!!}
+        endDate={item.endDate!!}
+        dayContainerWidth={dayContainerWidth}
+      />
+    ));
+  };
+
   return (
     <View style={style}>
       <View
         style={styles.scheduleContainer}
         onLayout={onLayout}
       >
+        {}
         <WeeklyCalendarSchedule
           scheduleTitle={schedule?.content[0].eventName || 'error'}
           startDate={schedule?.content[0].startDate!! || 'error'}
