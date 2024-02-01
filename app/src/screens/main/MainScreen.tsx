@@ -9,7 +9,6 @@ import { testJson } from '../../model/Event';
 
 const MainScreen = () => {
   const testData = testJson;
-  //console.log(testData);
 
   return (
     <>
